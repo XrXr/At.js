@@ -655,13 +655,12 @@ EditableController = (function(superClass) {
   };
 
   EditableController.prototype.insert = function(content, $li) {
-    var range, suffix, suffixNode;
-    suffix = (suffix = this.getOpt('suffix')) ? suffix : suffix || "\u00A0";
-    this.query.el.removeClass('atwho-query').addClass('atwho-inserted').html(content);
+    var range, suffixNode;
+    this.query.el.removeClass('atwho-query').addClass('atwho-inserted').html(content + (this.getOpt('suffix') || ""));
     if (range = this._getRange()) {
       range.setEndAfter(this.query.el[0]);
       range.collapse(false);
-      range.insertNode(suffixNode = this.app.document.createTextNode(suffix));
+      range.insertNode(suffixNode = this.app.document.createTextNode("\u00A0"));
       this._setRange('after', suffixNode, range);
     }
     if (!this.$inputor.is(':focus')) {
